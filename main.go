@@ -8,12 +8,12 @@ import (
 	"log"
 	"os"
 
-	"github.com/nfnt/resize"
+	"github.com/disintegration/imaging"
 )
 
 func main() {
 	//Add background image
-	bgImg, err := os.Open("vertical.jpg")
+	bgImg, err := os.Open("backgroundImage/vertical.jpg")
 	if err != nil {
 		log.Fatalf("failed to open: %s", err)
 	}
@@ -25,7 +25,7 @@ func main() {
 	defer bgImg.Close()
 
 	//Add watermark image
-	watermark, err := os.Open("highKycIdCardVerticalWatermark.png")
+	watermark, err := os.Open("kycWatermark/highKycIdCardVerticalWatermark.png")
 	if err != nil {
 		log.Fatalf("failed to open: %s", err)
 	}
@@ -37,14 +37,13 @@ func main() {
 	defer watermark.Close()
 
 	//Resize watermark for vertical image
-	newHeighVertical := 1350
-	verticalResizedImg := resize.Thumbnail(uint(decodeWatermark.Bounds().Dy()), uint(newHeighVertical), decodeWatermark, resize.Lanczos3)
-	//when image is horizontal, use code below.
 
+	verticalResizedImg := imaging.Resize(decodeWatermark, 0, 1350, imaging.Lanczos)
+
+	//when image is horizontal, use code below.
 	//Resize watermark for horizontal image
 
-	// newWidthHorizontal := 1350
-	// horizonResizedImg := resize.Thumbnail(uint(newWidthHorizontal), uint(decodeWatermark.Bounds().Dy()), decodeWatermark, resize.Lanczos3)
+	// horizonResizedImg := imaging.Resize(decodeWatermark, 1350, 0, imaging.Lanczos)
 
 	//Set Position vertical
 	offset := image.Pt(200, 0)
