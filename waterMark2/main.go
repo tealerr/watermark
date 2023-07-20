@@ -36,9 +36,12 @@ func main() {
 	}
 	defer watermark.Close()
 
-	//Resize watermark
+	//Resize watermark for vertical image
 	newHeighVertical := 1350
 	verticalResizedImg := resize.Thumbnail(uint(decodeWatermark.Bounds().Dy()), uint(newHeighVertical), decodeWatermark, resize.Lanczos3)
+	//when image is horizontal, use code below.
+
+	//Resize watermark for horizontal image
 
 	// newWidthHorizontal := 1350
 	// horizonResizedImg := resize.Thumbnail(uint(newWidthHorizontal), uint(decodeWatermark.Bounds().Dy()), decodeWatermark, resize.Lanczos3)
@@ -50,14 +53,16 @@ func main() {
 	draw.Draw(dupImg, b, decodeBgImg, image.ZP, draw.Src)
 	draw.Draw(dupImg, verticalResizedImg.Bounds().Add(offset), verticalResizedImg, image.ZP, draw.Over)
 
+	//when image is horizontal, use code below for set position.
 	//Set Position horizontal
+
 	// offset := image.Pt(20, 400)
 	// b := decodeBgImg.Bounds()
 	// dupImg := image.NewRGBA(b)
 	// draw.Draw(dupImg, b, decodeBgImg, image.ZP, draw.Src)
 	// draw.Draw(dupImg, verticalResizedImg.Bounds().Add(offset), horizonResizedImg, image.ZP, draw.Over)
 
-	//Create Duplicate Image with watermark
+	//Export image with watermark
 	resultDupImg, err := os.Create("dupVerticalTest.jpg")
 	if err != nil {
 		log.Fatalf("failed to create: %s", err)
