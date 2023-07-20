@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"image"
 	"image/draw"
 	"image/jpeg"
@@ -24,8 +23,6 @@ func main() {
 		log.Fatalf("failed to decode: %s", err)
 	}
 	defer bgImg.Close()
-
-	fmt.Println(decodeBgImg)
 
 	//Add watermark image
 	watermark, err := os.Open("highKycIdCardVerticalWatermark.png")
