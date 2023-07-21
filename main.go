@@ -48,24 +48,26 @@ func main() {
 	//Set Position vertical
 	offset := image.Pt(200, 0)
 	b := decodeBgImg.Bounds()
-	dupImg := image.NewRGBA(b)
-	draw.Draw(dupImg, b, decodeBgImg, image.ZP, draw.Src)
-	draw.Draw(dupImg, verticalResizedImg.Bounds().Add(offset), verticalResizedImg, image.ZP, draw.Over)
+	mergeImg := image.NewRGBA(b)
+
+	//Create merge image with watermark
+	draw.Draw(mergeImg, b, decodeBgImg, image.ZP, draw.Src)
+	draw.Draw(mergeImg, verticalResizedImg.Bounds().Add(offset), verticalResizedImg, image.ZP, draw.Over)
 
 	//when image is horizontal, use code below for set position.
 	//Set Position horizontal
 
 	// offset := image.Pt(20, 400)
 	// b := decodeBgImg.Bounds()
-	// dupImg := image.NewRGBA(b)
-	// draw.Draw(dupImg, b, decodeBgImg, image.ZP, draw.Src)
-	// draw.Draw(dupImg, verticalResizedImg.Bounds().Add(offset), horizonResizedImg, image.ZP, draw.Over)
+	// mergeImg := image.NewRGBA(b)
+	// draw.Draw(mergeImg, b, decodeBgImg, image.ZP, draw.Src)
+	// draw.Draw(mergeImg, verticalWatermarkResized.Bounds().Add(offset), horizonWatermarkResized, image.ZP, draw.Over)
 
 	//Export image with watermark
-	resultDupImg, err := os.Create("dupVerticalTest.jpg")
+	resultMergeImg, err := os.Create("dupVerticalTest83.jpg")
 	if err != nil {
 		log.Fatalf("failed to create: %s", err)
 	}
-	jpeg.Encode(resultDupImg, dupImg, &jpeg.Options{jpeg.DefaultQuality})
-	defer resultDupImg.Close()
+	jpeg.Encode(resultMergeImg, mergeImg, &jpeg.Options{jpeg.DefaultQuality})
+	defer resultMergeImg.Close()
 }
