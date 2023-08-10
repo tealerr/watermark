@@ -24,7 +24,6 @@ func main() {
 	}
 	defer bgImg.Close()
 
-	//Add watermark image
 	watermark, err := os.Open("kycWatermark/highKycIdCardVerticalWatermark.png")
 	if err != nil {
 		log.Fatalf("failed to open: %s", err)
